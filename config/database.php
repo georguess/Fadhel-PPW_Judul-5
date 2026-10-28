@@ -9,7 +9,7 @@ class Database {
     private string $host = '127.0.0.1';
     private string $db_name = 'db_mahasiswa';
     private string $username = 'root';
-    private string $password = '';
+    private string $password = 'root';
     private int $port = 3306;
     private ?PDO $conn = null;
 
@@ -29,7 +29,11 @@ class Database {
             ];
 
            // Percobaan 5-1 Langkah 4
-           
+           try {
+                $this->conn = new PDO($dsn, $this->username, $this->password, $options);
+           } catch (PDOExecption $e) {
+            throw new PDOExecption("Koneksi ke basis data gagal: ", $e->getMessage(), (int)$e->getCode());
+        }
         }
 
         return $this->conn;
